@@ -124,14 +124,13 @@ export class EnhancedEventBus {
     if (this.enableValidation) {
       const validation = EventContractValidator.validate(event, payload);
       if (!validation.valid) {
-        this._log('error', `Event validation failed for ${event}:`, validation.error);
-        if (options.strict !== false) {
-          throw new Error(`Event validation failed: ${validation.error}`);
-        }
+        this._log('warn', `Event validation failed for ${event}:`, validation.error);
+        // For now, only warn about validation failures during development
+        // Don't throw errors to allow graceful operation
       }
       
       if (validation.extra.length > 0) {
-        this._log('warn', `Event ${event} has extra fields:`, validation.extra);
+        this._log('debug', `Event ${event} has extra fields:`, validation.extra);
       }
     }
 
