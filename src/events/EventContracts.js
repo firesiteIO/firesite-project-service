@@ -201,6 +201,45 @@ export const EVENT_CONTRACTS = {
     required: ['action', 'teamId'],
     optional: ['parameters'],
     description: 'Workflow control action triggered'
+  },
+  
+  // Component Events
+  'ui:component-created': {
+    required: ['componentId', 'componentType'],
+    optional: ['options'],
+    description: 'Component created in registry'
+  },
+  'ui:component-initialized': {
+    required: ['componentId', 'componentType'],
+    optional: ['initialState'],
+    description: 'Component initialized and ready'
+  },
+  'ui:component-mounted': {
+    required: ['componentId', 'componentType'],
+    optional: ['timestamp'],
+    description: 'Component mounted to DOM'
+  },
+  'ui:component-unmounted': {
+    required: ['componentId', 'componentType'],
+    optional: ['timestamp'],
+    description: 'Component unmounted from DOM'
+  },
+  'ui:component-destroyed': {
+    required: ['componentId', 'componentType'],
+    optional: ['timestamp'],
+    description: 'Component completely destroyed'
+  },
+  'ui:component-state-changed': {
+    required: ['componentId', 'componentType'],
+    optional: ['previousState', 'newState', 'updates'],
+    description: 'Component state updated'
+  },
+  
+  // AI Events
+  'ui:ai-assist-requested': {
+    required: ['option'],
+    optional: ['optionIndex', 'context'],
+    description: 'AI assistance requested from UI'
   }
 };
 
