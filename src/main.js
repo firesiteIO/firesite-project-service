@@ -5,10 +5,14 @@
 
 import './assets/css/main.css';
 import { projectApp } from './core/app.js';
+import { config, isFirebaseConfigured } from './core/config/firebase-config.js';
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 Firesite Project Service starting...');
+  console.log('📊 Environment:', config.environment);
+  console.log('🔥 Firebase configured:', isFirebaseConfigured());
+  console.log('🎯 Features enabled:', config.features);
   
   try {
     // Initialize the main application

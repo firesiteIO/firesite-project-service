@@ -1,0 +1,20 @@
+{
+  "firebase": {
+    "projectId": "firesite-ai-f3bc8",
+    "region": "us-central1",
+    "databaseURL": "https://firesite-ai-f3bc8-default-rtdb.firebaseio.com"
+  },
+  "api": {
+    "cors": {
+      "origin": ["http://localhost:5002", "https://firesite.ai"]
+    }
+  },
+  "claude": {
+    "enabled": true,
+    "model": "claude-3-7-sonnet-20240229",
+    "maxTokens": 4000,
+    "commandTimeout": 10000,
+    "strictCommandValidation": false,
+    "conversationHistoryLimit": 20
+  }
+}

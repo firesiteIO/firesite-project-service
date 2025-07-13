@@ -1,230 +1,135 @@
-# Firesite Project Service - Development TODO
+# TODO.md - Firesite Project Service
 
-**Last Updated:** July 12th, 2025  
-**Status:** Foundation Setup Complete - KaibanJS Integration Phase
+> Task tracking integrated with CONTEXT.md for seamless session handoffs
 
-## 🚀 IMMEDIATE PRIORITIES (Phase 1: Foundation)
+**Last Updated**: 2025-07-13
+**Current Phase**: KaibanJS Analysis & Service-First Implementation
 
-### **PROJECT SETUP** ✅
-- [x] Create project directory structure
-- [x] Copy environment files from chat service
-- [x] Create comprehensive README.md
-- [x] Set up documentation structure
+## 🎯 Current Sprint: Extract & Transform KaibanJS
 
-### **VITE CONFIGURATION** 🔄 IN PROGRESS
-- [ ] Create package.json with dependencies
-- [ ] Configure Vite for development server (Port 5174)
-- [ ] Set up Tailwind CSS integration
-- [ ] Configure hot module replacement
-- [ ] Add build optimization settings
+### In Progress
+- [ ] **Analyze KaibanJS Core** (`firesite-ai-kanban`)
+  - [ ] Study agent definitions and roles
+  - [ ] Extract team composition patterns
+  - [ ] Document task flow mechanisms
+  - [ ] Identify state management approach
+  
+### Up Next
+- [ ] **Analyze KaibanJS UI** (`firesite-kaiban-board`)
+  - [ ] Extract Tailwind component patterns
+  - [ ] Document responsive layouts
+  - [ ] Study interaction patterns
+  - [ ] Identify reusable components
 
-### **KAIBANJS INTEGRATION** 📋 NEXT
-- [ ] Fork KaibanJS repository to Firesite organization
-- [ ] Clone forked KaibanJS into src/lib/kaiban/
-- [ ] Analyze KaibanJS architecture and APIs
-- [ ] Create integration layer for Firesite services
-- [ ] Set up basic Kanban board rendering
+- [ ] **Create Service Contracts**
+  - [ ] Define agent service interfaces
+  - [ ] Design event flow specifications
+  - [ ] Plan state synchronization strategy
+  - [ ] Document API contracts
 
-## 📋 PHASE 2: CORE KANBAN FUNCTIONALITY
+### Completed ✅
+- [x] Remove all mock/fake components
+- [x] Integrate real Firebase service
+- [x] Integrate real MCP Max service
+- [x] Add WebContainer support
+- [x] Create comprehensive documentation
+- [x] Setup rolling context document
+- [x] Clean up old documentation
 
-### **Basic Kanban Features**
-- [ ] **Board Management**
-  - [ ] Create board service
-  - [ ] Board CRUD operations
-  - [ ] Column management (To Do, In Progress, Done)
-  - [ ] Board state persistence
+## 📋 Phase 2: Multi-Tier Implementation
 
-- [ ] **Task Management**
-  - [ ] Task service implementation
-  - [ ] Task CRUD operations
-  - [ ] Task state management
-  - [ ] Drag-and-drop functionality
+### Projects & Sub-Projects
+- [ ] Design project hierarchy service
+- [ ] Implement organization → project → sub-project structure
+- [ ] Create project management UI
+- [ ] Add GitHub repository linking
 
-- [ ] **UI Components**
-  - [ ] Board component
-  - [ ] Column component
-  - [ ] Task card component
-  - [ ] Task creation modal
-  - [ ] Task edit interface
+### Team Management
+- [ ] Implement team composition system
+- [ ] Add human/AI/hybrid member types
+- [ ] Create role assignment interface
+- [ ] Build permission management
 
-### **Data Persistence**
-- [ ] localStorage integration for offline support
-- [ ] State serialization/deserialization
-- [ ] Auto-save functionality
-- [ ] Data validation and error handling
+### MMCO Integration
+- [ ] Design MMCO service interface
+- [ ] Implement version tracking
+- [ ] Add evolution handlers
+- [ ] Create MMCO UI components
 
-## 🤖 PHASE 3: AI INTEGRATION
+## 🚀 Phase 3: Agent Coordination
 
-### **MCP Max Connection**
-- [ ] MCP Max service integration
-- [ ] Context object synchronization
-- [ ] AI mode selection for project management
-- [ ] Error handling and fallback mechanisms
+### Multi-Agent System
+- [ ] Implement base agent types (PM, Dev, QA, Designer, Analyst)
+- [ ] Create agent spawning system
+- [ ] Build task decomposition logic
+- [ ] Add checkout/conflict resolution
 
-### **AI-Powered Features**
-- [ ] **Task Generation**
-  - [ ] Convert user stories to tasks
-  - [ ] Break down complex requirements
-  - [ ] Generate acceptance criteria
-  - [ ] Estimate task complexity
+### Integration Points
+- [ ] GitHub workflow automation
+- [ ] Jira/Trello/Notion connectors
+- [ ] Storybook integration
+- [ ] Docker container management
 
-- [ ] **Smart Suggestions**
-  - [ ] Recommend next actions
-  - [ ] Identify blockers and dependencies
-  - [ ] Suggest task assignments
-  - [ ] Workflow optimization suggestions
+## 💡 Backlog & Ideas
 
-- [ ] **Context Awareness**
-  - [ ] MMCO integration for project state
-  - [ ] UACP integration for team context
-  - [ ] PACP integration for preferences
-  - [ ] Project methodology learning
+### Performance & Scaling
+- [ ] Implement virtual scrolling for large boards
+- [ ] Add WebSocket support for real-time updates
+- [ ] Create offline sync queue
+- [ ] Build caching layer
 
-### **AI UI Components**
-- [ ] AI assistant panel
-- [ ] Task generation interface
-- [ ] Suggestion display system
-- [ ] Context configuration panel
+### Advanced Features
+- [ ] AI-powered sprint planning
+- [ ] Predictive task estimation
+- [ ] Team performance analytics
+- [ ] Cross-project resource planning
 
-## 🎨 PHASE 4: ADVANCED UI/UX
+### Developer Experience
+- [ ] Create CLI for project scaffolding
+- [ ] Add VS Code extension
+- [ ] Build component playground
+- [ ] Create interactive documentation
 
-### **Enhanced Kanban Features**
-- [ ] Multiple board support
-- [ ] Custom column types
-- [ ] Task labels and categories
-- [ ] Due dates and reminders
-- [ ] Task dependencies visualization
-- [ ] Progress tracking and metrics
+## 🐛 Known Issues
 
-### **Responsive Design**
-- [ ] Mobile-responsive board layout
-- [ ] Touch-friendly drag-and-drop
-- [ ] Optimized for tablet interfaces
-- [ ] Accessibility improvements
+### Current Bugs
+- [ ] Firebase Functions offline (expected - graceful degradation working)
+- [ ] MCP Max offline (expected - graceful degradation working)
 
-### **Visual Enhancements**
-- [ ] Smooth animations and transitions
-- [ ] Custom themes and branding
-- [ ] Dark mode support
-- [ ] Visual task progress indicators
+### Technical Debt
+- [ ] Refactor event naming for consistency
+- [ ] Add comprehensive error boundaries
+- [ ] Improve TypeScript definitions
+- [ ] Enhance accessibility features
 
-## 🔗 PHASE 5: ECOSYSTEM INTEGRATION
+## 📝 Notes for Next Session
 
-### **Chat Service Integration**
-- [ ] Bi-directional communication setup
-- [ ] Context sharing protocols
-- [ ] Real-time collaboration features
-- [ ] Chat-to-task conversion
+### Context References
+- See `/docs/CONTEXT.md` for current position and handoff details
+- Check `/docs/PROJECT_ARCHITECTURE.md` for system design
+- Review `/docs/KAIBAN_ANALYSIS_PLAN.md` for extraction strategy
 
-### **Cross-Service Features**
-- [ ] Unified authentication with MCP Max
-- [ ] Shared context objects
-- [ ] Cross-service navigation
-- [ ] Integrated notification system
+### Quick Commands
+```bash
+# Start dev server
+npm run dev
 
-## 🧪 TESTING & QUALITY
+# Run tests
+npm run test
 
-### **Test Implementation**
-- [ ] **Unit Tests**
-  - [ ] Service layer testing
-  - [ ] Component testing
-  - [ ] Utility function testing
+# Check code quality
+npm run code-quality
 
-- [ ] **Integration Tests**
-  - [ ] MCP Max integration testing
-  - [ ] Cross-service communication
-  - [ ] Data persistence testing
+# View recent changes
+git log --oneline -10
+```
 
-- [ ] **E2E Tests**
-  - [ ] Complete workflow testing
-  - [ ] AI feature validation
-  - [ ] Performance testing
-
-### **Code Quality**
-- [ ] ESLint configuration
-- [ ] Prettier setup
-- [ ] Pre-commit hooks
-- [ ] Code coverage reporting
-
-## 📚 DOCUMENTATION
-
-### **Technical Documentation**
-- [ ] API documentation
-- [ ] Service architecture guide
-- [ ] KaibanJS integration documentation
-- [ ] AI features guide
-
-### **User Documentation**
-- [ ] Setup and installation guide
-- [ ] User manual for Kanban features
-- [ ] AI assistant usage guide
-- [ ] Troubleshooting guide
-
-## 🚀 PRODUCTION READINESS
-
-### **Performance Optimization**
-- [ ] Bundle size optimization
-- [ ] Lazy loading implementation
-- [ ] Performance monitoring
-- [ ] Memory leak prevention
-
-### **Security**
-- [ ] Input validation and sanitization
-- [ ] Secure API communication
-- [ ] XSS protection
-- [ ] CSRF protection
-
-### **Deployment**
-- [ ] Production build configuration
-- [ ] Environment-specific configs
-- [ ] CI/CD pipeline setup
-- [ ] Docker containerization
-
-## 🔮 FUTURE ENHANCEMENTS
-
-### **Advanced AI Features**
-- [ ] Predictive project management
-- [ ] Automated workflow suggestions
-- [ ] Risk assessment and mitigation
-- [ ] Project success prediction
-
-### **Collaboration Features**
-- [ ] Real-time multi-user support
-- [ ] Team workspaces
-- [ ] Permission management
-- [ ] Activity feeds and notifications
-
-### **Analytics & Insights**
-- [ ] Project metrics dashboard
-- [ ] Productivity analytics
-- [ ] Team performance insights
-- [ ] Historical trend analysis
-
-## 📊 SUCCESS METRICS
-
-### **Development Metrics**
-- [ ] Test coverage: 95%+
-- [ ] Code quality: ESLint compliance
-- [ ] Performance: Page load < 2s
-- [ ] Bundle size: < 500KB gzipped
-
-### **User Experience Metrics**
-- [ ] Task creation time: < 30s
-- [ ] AI response time: < 2s
-- [ ] Board load time: < 1s
-- [ ] Zero data loss incidents
-
-## 🎯 IMMEDIATE NEXT STEPS
-
-1. **Complete Vite Setup** (package.json, configuration)
-2. **KaibanJS Fork & Integration** (analyze, integrate, adapt)
-3. **Basic Board Rendering** (minimal viable board)
-4. **MCP Max Connection** (AI integration foundation)
+### Remember
+- Service-first architecture always
+- All AI operations through MCP Max
+- Dog-food from Phase 2 onward
+- Update CONTEXT.md before ending session
 
 ---
 
-**Current Focus**: Foundation setup and KaibanJS integration  
-**Target**: Functional AI-powered Kanban board within next development session  
-**Vision**: Revolutionary project management with context-aware AI assistance
-
-*Building the future of intelligent project management* 🚀
+*This TODO list works in tandem with CONTEXT.md to ensure smooth handoffs between Claude sessions*

@@ -141,6 +141,7 @@ class EventBus {
   }
 }
 
-// Export singleton instance
+// Export both class and singleton instance
+export { EventBus };
 export const eventBus = new EventBus();
 export default eventBus;

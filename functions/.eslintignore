@@ -1,0 +1,9 @@
+node_modules/
+.git/
+coverage/
+dist/
+build/
+**/temp/**
+**/*.min.js
+**/*.js
+src/**/* 

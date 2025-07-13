@@ -5,9 +5,13 @@
 
 import { eventBus } from './events/event-bus.js';
 import { themeService } from '../services/ui/theme.service.js';
-import { aiService } from '../services/ai/ai.service.js';
+import { webContainerService } from '../services/webcontainer-service.js';
 import { kanbanService } from '../services/kanban/kanban.service.js';
-import { projectService } from '../services/project/project.service.js';
+import { firebaseService } from '../services/firebase-service.js';
+import { mcpMaxService } from '../services/mcp-max-service.js';
+import { aiService } from '../services/ai-service.js';
+import { kaibanService } from '../services/kaiban-service.js';
+import { mmcoService } from '../services/mmco-service.js';
 
 class ProjectApp {
   constructor() {
@@ -69,24 +73,35 @@ class ProjectApp {
       eventBus: eventBus,
       theme: themeService,
       
-      // AI integration
+      // Development environment
+      webContainer: webContainerService,
+      
+      // Infrastructure services
+      firebase: firebaseService,
+      mcpMax: mcpMaxService,
       ai: aiService,
+      kaiban: kaibanService,
+      mmco: mmcoService,
       
       // Project management
-      project: projectService,
       kanban: kanbanService
     };
 
-    // Initialize each service
-    for (const [name, service] of Object.entries(this.services)) {
+    // Initialize all services
+    const serviceNames = ['webContainer', 'firebase', 'mcpMax', 'ai', 'kaiban', 'mmco', 'kanban'];
+    
+    for (const serviceName of serviceNames) {
       try {
-        if (service.initialize) {
-          await service.initialize();
-          console.log(`✅ ${name} service initialized`);
-        }
+        await this.services[serviceName].initialize();
+        console.log(`✅ ${serviceName} service initialized`);
       } catch (error) {
-        console.error(`❌ Failed to initialize ${name} service:`, error);
-        throw new Error(`Service initialization failed: ${name}`);
+        console.error(`❌ Failed to initialize ${serviceName} service:`, error);
+        // Don't throw for infrastructure services - allow graceful degradation
+        if (serviceName === 'kanban') {
+          throw new Error(`Service initialization failed: ${serviceName}`);
+        } else {
+          console.log(`⚠️ ${serviceName} service failed, continuing with degraded functionality`);
+        }
       }
     }
   }
@@ -103,8 +118,16 @@ class ProjectApp {
     // Setup theme toggle
     this.setupThemeToggle();
     
+    // Setup header buttons
+    this.setupHeaderButtons();
+    
     // Update version display
     this.updateVersionDisplay();
+    
+    // Initialize REAL Kanban Board using our Firebase/MCP MAX services
+    const { default: KanbanBoard } = await import('../components/kanban/kanban-board.js');
+    this.components.kanbanBoard = new KanbanBoard('kanban-board');
+    await this.components.kanbanBoard.initialize();
     
     // Initialize status indicators
     this.updateConnectionStatus('connecting');
@@ -114,38 +137,28 @@ class ProjectApp {
    * Setup global event listeners
    */
   setupEventListeners() {
-    // AI service events
-    eventBus.on('ai:connected', () => {
-      this.state.connected = true;
+    // Real Kanban Board events
+    eventBus.on('kanban-board:initialized', () => {
+      console.log('✅ Real Kanban Board initialized');
       this.updateConnectionStatus('connected');
-      this.updateAIStatus('connected');
+      this.updateAIStatus('connected', 'Real AI Services Ready');
     });
 
-    eventBus.on('ai:disconnected', () => {
-      this.state.connected = false;
-      this.updateConnectionStatus('disconnected');
-      this.updateAIStatus('disconnected');
+    eventBus.on('kanban:task:created', (data) => {
+      console.log('✅ Task created:', data.task.title);
     });
 
-    eventBus.on('ai:error', (data) => {
-      console.error('AI service error:', data.error);
-      this.updateAIStatus('error', data.error.message);
+    eventBus.on('kanban:task:moved', (data) => {
+      console.log('✅ Task moved:', data.task.title);
     });
 
-    // Project events
-    eventBus.on('project:loaded', (data) => {
-      this.state.currentProject = data.project;
-      this.updateProjectDisplay();
+    // Kanban board UI events
+    eventBus.on('kanban-board:add-task-requested', (data) => {
+      this.handleAddTaskRequest(data.columnId);
     });
 
-    eventBus.on('project:changed', (data) => {
-      this.state.currentProject = data.project;
-      this.updateProjectDisplay();
-    });
-
-    // Kanban events
-    eventBus.on('kanban:updated', () => {
-      this.updateKanbanDisplay();
+    eventBus.on('kanban-board:task-menu-requested', (data) => {
+      this.handleTaskMenuRequest(data.taskId, data.event);
     });
 
     // Global error handling
@@ -162,14 +175,9 @@ class ProjectApp {
     console.log('📂 Loading initial state...');
 
     try {
-      // Try to connect to AI service
-      await this.services.ai.connect();
-      
-      // Load default project or create new one
-      await this.services.project.loadDefaultProject();
-      
-      // Initialize Kanban board
-      await this.services.kanban.initializeBoard();
+      // Kanban service is already initialized
+      // Set up initial UI state
+      this.updateAIStatus('disconnected'); // Start as disconnected, will connect later
       
     } catch (error) {
       console.warn('⚠️ Some services failed to initialize:', error);
@@ -204,6 +212,35 @@ class ProjectApp {
   }
 
   /**
+   * Setup header button functionality
+   */
+  setupHeaderButtons() {
+    // Add Task button
+    const addTaskBtn = document.getElementById('add-task-btn');
+    if (addTaskBtn) {
+      addTaskBtn.addEventListener('click', () => {
+        this.handleAddTaskFromHeader();
+      });
+    }
+
+    // AI Assist button
+    const aiAssistBtn = document.getElementById('ai-assist-btn');
+    if (aiAssistBtn) {
+      aiAssistBtn.addEventListener('click', () => {
+        this.handleAIAssistRequest();
+      });
+    }
+
+    // Settings button
+    const settingsBtn = document.getElementById('settings-btn');
+    if (settingsBtn) {
+      settingsBtn.addEventListener('click', () => {
+        this.handleSettingsRequest();
+      });
+    }
+  }
+
+  /**
    * Update version display
    */
   updateVersionDisplay() {
@@ -220,14 +257,17 @@ class ProjectApp {
     const statusElement = document.getElementById('connection-status');
     if (statusElement) {
       const statusText = {
-        'connected': 'Connected to AI',
-        'connecting': 'Connecting to AI...',
+        'connected': 'AI Connected',
+        'connecting': 'AI Connecting...',
         'disconnected': 'AI Disconnected',
         'error': message || 'Connection Error'
       };
       
       statusElement.textContent = statusText[status] || status;
     }
+    
+    // Also update the main AI status to keep them in sync
+    this.updateAIStatus(status, message);
   }
 
   /**
@@ -269,23 +309,107 @@ class ProjectApp {
   }
 
   /**
-   * Update project display
+   * Handle add task request from header button
    */
-  updateProjectDisplay() {
-    // Update project-related UI elements
-    const projectTitle = document.querySelector('[data-project-title]');
-    if (projectTitle && this.state.currentProject) {
-      projectTitle.textContent = this.state.currentProject.name;
+  handleAddTaskFromHeader() {
+    // Simple prompt for now - can be enhanced with modal later
+    const title = prompt('Task title:');
+    if (title && title.trim()) {
+      const description = prompt('Task description (optional):') || '';
+      
+      // For now, add to the "To Do" column (first column)
+      // This could be enhanced to let user choose column
+      const columnId = 'todo'; // Default column
+      
+      console.log(`📝 Creating task: ${title.trim()}`);
+      
+      // Add task to the real Kanban service
+      const boardData = this.services.kanban.getCurrentBoard();
+      if (boardData) {
+        this.services.kanban.createTask({
+          title: title.trim(),
+          description: description,
+          columnId: columnId,
+          boardId: boardData.id
+        });
+      }
     }
   }
 
   /**
-   * Update Kanban display
+   * Handle add task request
    */
-  updateKanbanDisplay() {
-    // Trigger Kanban board refresh
-    if (this.services.kanban) {
-      this.services.kanban.refreshBoard();
+  handleAddTaskRequest(columnId) {
+    // Simple prompt for now - can be enhanced with modal later
+    const title = prompt('Task title:');
+    if (title && title.trim()) {
+      const boardData = this.services.kanban.getCurrentBoard();
+      if (boardData) {
+        this.services.kanban.createTask({
+          title: title.trim(),
+          description: '',
+          columnId,
+          boardId: boardData.id
+        });
+      }
+    }
+  }
+
+  /**
+   * Handle AI Assist request
+   */
+  handleAIAssistRequest() {
+    console.log('🤖 AI Assist requested');
+    
+    const options = [
+      'Run Safe AI Tests',
+      'Analyze Current Tasks', 
+      'Generate Task Suggestions',
+      'Optimize Workflow'
+    ];
+    
+    const choice = prompt(`AI Assist Options:\n${options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}\n\nChoose option (1-${options.length}):`);
+    
+    if (choice && choice >= 1 && choice <= options.length) {
+      const selectedOption = options[choice - 1];
+      console.log(`🎯 AI Assist: ${selectedOption}`);
+      
+      // Trigger the appropriate AI action
+      if (choice == 1 && this.components.kanbanBoard) {
+        // Run real AI analysis
+        this.components.kanbanBoard._handleAIAnalysis();
+      } else {
+        alert(`AI Assist: ${selectedOption} - Coming soon!`);
+      }
+    }
+  }
+
+  /**
+   * Handle settings request
+   */
+  handleSettingsRequest() {
+    console.log('⚙️ Settings requested');
+    alert('Settings panel - Coming soon!\n\nCurrent features:\n- Theme toggle (working)\n- AI-powered Kanban (working)\n- Safe AI testing (working)');
+  }
+
+  /**
+   * Handle task menu request
+   */
+  handleTaskMenuRequest(taskId, event) {
+    // Simple alert for now - can be enhanced with context menu later
+    const action = prompt('Action (edit/delete):');
+    if (action === 'delete') {
+      if (confirm('Delete this task?')) {
+        this.services.kanban.deleteTask(taskId);
+      }
+    } else if (action === 'edit') {
+      const task = this.services.kanban.tasks.get(taskId);
+      if (task) {
+        const newTitle = prompt('New title:', task.title);
+        if (newTitle && newTitle.trim() && newTitle !== task.title) {
+          this.services.kanban.updateTask(taskId, { title: newTitle.trim() });
+        }
+      }
     }
   }
 

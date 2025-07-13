@@ -2,13 +2,47 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
-  // Development server configuration
+  // Development server configuration for WebContainers
   server: {
     port: 5174,
     host: true,
     open: true,
     cors: true,
-    strictPort: true
+    strictPort: true,
+    headers: {
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+      'Cross-Origin-Opener-Policy': 'same-origin'
+    },
+    proxy: {
+      // Proxy Firebase Functions API calls
+      '/api': {
+        target: 'http://localhost:5001/firesite-ai-f3bc8/us-central1',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path
+      },
+      // Proxy Claude API calls
+      '/claude': {
+        target: 'http://localhost:5001/firesite-ai-f3bc8/us-central1',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path
+      },
+      // Proxy MCP MAX server
+      '/mcp-max': {
+        target: 'http://localhost:3002',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/mcp-max/, '')
+      },
+      // Proxy MCP Base server
+      '/mcp-base': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/mcp-base/, '')
+      }
+    }
   },
 
   // Build configuration
@@ -23,8 +57,10 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          'vendor': ['uuid'],
+          'vendor': ['uuid', 'marked'],
           'ai': ['@anthropic-ai/sdk'],
+          'kanban': ['sortablejs'],
+          'firebase': ['firebase'],
           'security': ['dompurify'],
           'highlight': ['highlight.js']
         }
@@ -88,15 +124,19 @@ export default defineConfig({
   // Plugin configuration
   plugins: [],
 
-  // Optimization
+  // Optimization for WebContainers
   optimizeDeps: {
     include: [
       'uuid',
       'dompurify',
-      'highlight.js'
+      'highlight.js',
+      'marked',
+      'sortablejs',
+      'firebase'
     ],
     exclude: [
-      '@anthropic-ai/sdk' // Keep as external for dynamic loading
+      '@anthropic-ai/sdk', // Keep as external for dynamic loading
+      '@webcontainer/api' // Exclude WebContainer API for proper loading
     ]
   },
 
