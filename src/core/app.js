@@ -59,6 +59,11 @@ class ProjectApp {
       this.initialized = true;
       this.state.loading = false;
       
+      // Make globally available for component testing
+      if (typeof window !== 'undefined') {
+        window.projectApp = this;
+      }
+      
       // Show main app
       this.showMainApp();
       

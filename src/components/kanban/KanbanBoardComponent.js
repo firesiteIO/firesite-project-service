@@ -181,9 +181,11 @@ export class KanbanBoardComponent extends BaseComponent {
           
           <!-- Workflow Status -->
           <div class="fs-bg-white/5 fs-p-3 fs-rounded">
-            <h4 class="fs-text-sm fs-font-medium fs-text-slate-700 fs-mb-2">Workflow</h4>
-            <div class="fs-text-sm fs-text-slate-600">
-              <strong>Status:</strong> ${workflowStatus}
+            <h4 class="fs-text-sm fs-font-medium fs-text-slate-700 fs-mb-2">Workflow & Stats</h4>
+            <div class="fs-text-sm fs-text-slate-600 fs-space-y-1">
+              <div><strong>Status:</strong> ${workflowStatus}</div>
+              <div><strong>Tasks:</strong> ${this.state.tasks.length}</div>
+              <div><strong>Demo Mode:</strong> Active</div>
             </div>
             <div class="fs-mt-2 fs-flex fs-gap-1">
               <button class="${this.classes.button.primary} fs-text-xs fs-py-1 fs-px-2" onclick="this.closest('[data-component]').__component.startWorkflow()">
@@ -191,6 +193,9 @@ export class KanbanBoardComponent extends BaseComponent {
               </button>
               <button class="${this.classes.button.secondary} fs-text-xs fs-py-1 fs-px-2" onclick="this.closest('[data-component]').__component.pauseWorkflow()">
                 Pause
+              </button>
+              <button class="${this.classes.button.secondary} fs-text-xs fs-py-1 fs-px-2" onclick="this.closest('[data-component]').__component.createDemoTask()">
+                Add Task
               </button>
             </div>
           </div>
@@ -405,6 +410,28 @@ export class KanbanBoardComponent extends BaseComponent {
       action: 'pause',
       teamId: 'default-team'
     });
+  }
+
+  createDemoTask() {
+    const demoTasks = [
+      'Implement agent coordination patterns',
+      'Add real-time collaboration features', 
+      'Build advanced UI animations',
+      'Create team management interface',
+      'Add workflow analytics dashboard',
+      'Implement context evolution system'
+    ];
+    
+    const randomTask = demoTasks[Math.floor(Math.random() * demoTasks.length)];
+    
+    // Use the global TaskService to create a task
+    if (window.projectApp?.services?.taskService) {
+      window.projectApp.services.taskService.createTask({
+        title: randomTask,
+        description: 'Generated demo task for testing the beautiful UI',
+        isDeliverable: Math.random() > 0.5
+      });
+    }
   }
 
   retry() {
