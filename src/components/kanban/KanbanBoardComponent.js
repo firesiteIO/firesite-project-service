@@ -41,9 +41,9 @@ export class KanbanBoardComponent extends BaseComponent {
       
       // AI Integration Panel
       aiPanel: {
-        container: 'ai-integration-panel mb-6 bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg',
+        container: 'ai-integration-panel mb-6 bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-2 border-orange-400',
         header: 'flex justify-between items-center mb-4',
-        title: 'text-lg font-medium text-slate-800',
+        title: 'text-lg font-medium text-green-800 font-bold',
         controls: 'flex gap-2',
         status: 'flex items-center gap-2 text-sm',
         indicator: {
