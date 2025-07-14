@@ -55,4 +55,18 @@ window.addEventListener('unhandledrejection', (event) => {
 // Hot module replacement for development
 if (import.meta.hot) {
   import.meta.hot.accept();
+  
+  // Accept updates to the main app module
+  import.meta.hot.accept('./core/app.js', (newModule) => {
+    console.log('🔥 HMR: Reloading app module');
+    if (newModule && newModule.projectApp) {
+      newModule.projectApp.initialize();
+    }
+  });
+  
+  // Accept component updates
+  import.meta.hot.accept(['./components/**/*.js'], () => {
+    console.log('🔥 HMR: Reloading components');
+    window.location.reload();
+  });
 }
