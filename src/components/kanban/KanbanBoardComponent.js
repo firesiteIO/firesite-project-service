@@ -36,58 +36,58 @@ export class KanbanBoardComponent extends BaseComponent {
       ...base,
       
       // Main container
-      container: 'fs-relative fs-bg-slate-900 fs-overflow-hidden fs-rounded-xl fs-ring-1 fs-ring-slate-700',
-      fullScreen: 'fs-fixed fs-top-0 fs-left-0 fs-w-screen fs-h-screen fs-z-50',
+      container: 'relative bg-slate-900 overflow-hidden rounded-xl ring-1 ring-slate-700',
+      fullScreen: 'fixed top-0 left-0 w-screen h-screen z-50',
       
       // AI Integration Panel
       aiPanel: {
-        container: 'fs-ai-integration-panel fs-mb-6 fs-bg-gradient-to-r fs-from-blue-50 fs-to-purple-50 fs-p-4 fs-rounded-lg',
-        header: 'fs-flex fs-justify-between fs-items-center fs-mb-4',
-        title: 'fs-text-lg fs-font-medium fs-text-slate-800',
-        controls: 'fs-flex fs-gap-2',
-        status: 'fs-flex fs-items-center fs-gap-2 fs-text-sm',
+        container: 'ai-integration-panel mb-6 bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg',
+        header: 'flex justify-between items-center mb-4',
+        title: 'text-lg font-medium text-slate-800',
+        controls: 'flex gap-2',
+        status: 'flex items-center gap-2 text-sm',
         indicator: {
-          online: 'fs-w-2 fs-h-2 fs-rounded-full fs-bg-green-500',
-          offline: 'fs-w-2 fs-h-2 fs-rounded-full fs-bg-red-500',
-          unknown: 'fs-w-2 fs-h-2 fs-rounded-full fs-bg-yellow-500'
+          online: 'w-2 h-2 rounded-full bg-green-500',
+          offline: 'w-2 h-2 rounded-full bg-red-500',
+          unknown: 'w-2 h-2 rounded-full bg-yellow-500'
         }
       },
       
       // Board layout
       board: {
-        desktop: 'fs-hidden md:fs-grid fs-grid-cols-4 fs-gap-3 fs-divide-x fs-divide-slate-700',
-        mobile: 'fs-block md:fs-hidden',
-        column: 'fs-px-3 fs-min-h-0 fs-flex fs-flex-col',
-        columnHeader: 'fs-flex fs-justify-between fs-items-center fs-mb-4',
-        columnTitle: 'fs-text-sm fs-font-medium fs-text-slate-200',
-        columnCount: 'fs-text-xs fs-text-slate-400',
-        taskList: 'fs-space-y-3 fs-flex-1 fs-overflow-y-auto'
+        desktop: 'hidden md:grid grid-cols-4 gap-3 divide-x divide-slate-700',
+        mobile: 'block md:hidden',
+        column: 'px-3 min-h-0 flex flex-col',
+        columnHeader: 'flex justify-between items-center mb-4',
+        columnTitle: 'text-sm font-medium text-slate-200',
+        columnCount: 'text-xs text-slate-400',
+        taskList: 'space-y-3 flex-1 overflow-y-auto'
       },
       
       // Task cards based on KaibanJS analysis
       task: {
-        card: 'fs-ring-1 fs-ring-slate-950 fs-rounded-lg fs-bg-slate-800 fs-p-4 hover:fs-ring-indigo-500 fs-cursor-pointer fs-transition-all fs-duration-200',
-        header: 'fs-flex fs-justify-between fs-items-start',
-        title: 'fs-text-sm fs-font-medium fs-text-slate-200',
-        description: 'fs-text-xs fs-text-slate-400 fs-mt-2',
-        tags: 'fs-mt-3 fs-flex fs-gap-2 fs-flex-wrap',
-        footer: 'fs-mt-3 fs-flex fs-justify-between fs-items-center',
-        progress: 'fs-flex fs-items-center fs-gap-1'
+        card: 'ring-1 ring-slate-950 rounded-lg bg-slate-800 p-4 hover:ring-indigo-500 cursor-pointer transition-all duration-200',
+        header: 'flex justify-between items-start',
+        title: 'text-sm font-medium text-slate-200',
+        description: 'text-xs text-slate-400 mt-2',
+        tags: 'mt-3 flex gap-2 flex-wrap',
+        footer: 'mt-3 flex justify-between items-center',
+        progress: 'flex items-center gap-1'
       },
       
       // Status badges from KaibanJS
       status: {
-        todo: 'fs-bg-slate-500/15 fs-text-slate-400',
-        doing: 'fs-bg-blue-500/15 fs-text-blue-400',
-        blocked: 'fs-bg-red-500/15 fs-text-red-400',
-        done: 'fs-bg-green-500/15 fs-text-green-400',
-        awaitingValidation: 'fs-bg-indigo-500/15 fs-text-indigo-500'
+        todo: 'bg-slate-500/15 text-slate-400',
+        doing: 'bg-blue-500/15 text-blue-400',
+        blocked: 'bg-red-500/15 text-red-400',
+        done: 'bg-green-500/15 text-green-400',
+        awaitingValidation: 'bg-indigo-500/15 text-indigo-500'
       },
       
       // Activity indicators
       activity: {
-        counter: 'fs-bg-slate-400 fs-rounded-full fs-px-1 fs-text-[10px] fs-text-slate-900 fs-font-medium group-hover:fs-bg-indigo-500',
-        label: 'fs-text-xs fs-text-slate-400'
+        counter: 'bg-slate-400 rounded-full px-1 text-[10px] text-slate-900 font-medium group-hover:bg-indigo-500',
+        label: 'text-xs text-slate-400'
       }
     };
   }
@@ -153,11 +153,11 @@ export class KanbanBoardComponent extends BaseComponent {
           </div>
         </div>
         
-        <div class="fs-grid fs-grid-cols-1 md:fs-grid-cols-3 fs-gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <!-- Connection Status -->
-          <div class="fs-bg-white/5 fs-p-3 fs-rounded">
-            <h4 class="fs-text-sm fs-font-medium fs-text-slate-700 fs-mb-2">Connection Status</h4>
-            <div class="fs-space-y-2">
+          <div class="bg-white/5 p-3 rounded">
+            <h4 class="text-sm font-medium text-slate-700 mb-2">Connection Status</h4>
+            <div class="space-y-2">
               ${this._renderConnectionStatus('Firebase Functions', connectionStatus.firebase)}
               ${this._renderConnectionStatus('MCP Max Server', connectionStatus.mcpMax)}
               ${this._renderConnectionStatus('WebContainer', connectionStatus.webContainer)}
@@ -165,13 +165,13 @@ export class KanbanBoardComponent extends BaseComponent {
           </div>
           
           <!-- AI Mode -->
-          <div class="fs-bg-white/5 fs-p-3 fs-rounded">
-            <h4 class="fs-text-sm fs-font-medium fs-text-slate-700 fs-mb-2">AI Mode</h4>
-            <div class="fs-text-sm fs-text-slate-600">
+          <div class="bg-white/5 p-3 rounded">
+            <h4 class="text-sm font-medium text-slate-700 mb-2">AI Mode</h4>
+            <div class="text-sm text-slate-600">
               <strong>Current:</strong> ${aiMode}
             </div>
-            <div class="fs-mt-2">
-              <select class="fs-text-xs fs-p-1 fs-rounded fs-bg-white/10" onchange="this.closest('[data-component]').__component.setAIMode(this.value)">
+            <div class="mt-2">
+              <select class="text-xs p-1 rounded bg-white/10" onchange="this.closest('[data-component]').__component.setAIMode(this.value)">
                 <option value="development" ${aiMode === 'development' ? 'selected' : ''}>Development</option>
                 <option value="mcp-max" ${aiMode === 'mcp-max' ? 'selected' : ''}>MCP Max</option>
                 <option value="offline" ${aiMode === 'offline' ? 'selected' : ''}>Offline</option>
@@ -180,21 +180,21 @@ export class KanbanBoardComponent extends BaseComponent {
           </div>
           
           <!-- Workflow Status -->
-          <div class="fs-bg-white/5 fs-p-3 fs-rounded">
-            <h4 class="fs-text-sm fs-font-medium fs-text-slate-700 fs-mb-2">Workflow & Stats</h4>
-            <div class="fs-text-sm fs-text-slate-600 fs-space-y-1">
+          <div class="bg-white/5 p-3 rounded">
+            <h4 class="text-sm font-medium text-slate-700 mb-2">Workflow & Stats</h4>
+            <div class="text-sm text-slate-600 space-y-1">
               <div><strong>Status:</strong> ${workflowStatus}</div>
               <div><strong>Tasks:</strong> ${this.state.tasks.length}</div>
               <div><strong>Demo Mode:</strong> Active</div>
             </div>
-            <div class="fs-mt-2 fs-flex fs-gap-1">
-              <button class="${this.classes.button.primary} fs-text-xs fs-py-1 fs-px-2" onclick="this.closest('[data-component]').__component.startWorkflow()">
+            <div class="mt-2 flex gap-1">
+              <button class="${this.classes.button.primary} text-xs py-1 px-2" onclick="this.closest('[data-component]').__component.startWorkflow()">
                 Start
               </button>
-              <button class="${this.classes.button.secondary} fs-text-xs fs-py-1 fs-px-2" onclick="this.closest('[data-component]').__component.pauseWorkflow()">
+              <button class="${this.classes.button.secondary} text-xs py-1 px-2" onclick="this.closest('[data-component]').__component.pauseWorkflow()">
                 Pause
               </button>
-              <button class="${this.classes.button.secondary} fs-text-xs fs-py-1 fs-px-2" onclick="this.closest('[data-component]').__component.createDemoTask()">
+              <button class="${this.classes.button.secondary} text-xs py-1 px-2" onclick="this.closest('[data-component]').__component.createDemoTask()">
                 Add Task
               </button>
             </div>
@@ -212,7 +212,7 @@ export class KanbanBoardComponent extends BaseComponent {
     return `
       <div class="${this.classes.aiPanel.status}">
         <div class="${statusClass}"></div>
-        <span class="fs-text-xs fs-text-slate-600">${name}</span>
+        <span class="text-xs text-slate-600">${name}</span>
       </div>
     `;
   }
@@ -229,7 +229,7 @@ export class KanbanBoardComponent extends BaseComponent {
     // Mobile swiper implementation would go here
     return `
       <div class="${this.classes.board.mobile}">
-        <div class="fs-text-center fs-text-slate-400 fs-p-8">
+        <div class="text-center text-slate-400 p-8">
           Mobile swiper implementation coming soon...
         </div>
       </div>
@@ -304,7 +304,7 @@ export class KanbanBoardComponent extends BaseComponent {
   _renderAgentAvatar(task) {
     if (!task.assignedAgentId) {
       return `
-        <div class="fs-text-xs fs-text-slate-500">
+        <div class="text-xs text-slate-500">
           No agent assigned
         </div>
       `;
@@ -359,16 +359,16 @@ export class KanbanBoardComponent extends BaseComponent {
     dropZones.forEach(zone => {
       zone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        zone.classList.add('fs-bg-indigo-500/10');
+        zone.classList.add('bg-indigo-500/10');
       });
       
       zone.addEventListener('dragleave', () => {
-        zone.classList.remove('fs-bg-indigo-500/10');
+        zone.classList.remove('bg-indigo-500/10');
       });
       
       zone.addEventListener('drop', (e) => {
         e.preventDefault();
-        zone.classList.remove('fs-bg-indigo-500/10');
+        zone.classList.remove('bg-indigo-500/10');
         
         const taskId = e.dataTransfer.getData('text/plain');
         const newStatus = zone.getAttribute('data-status');
