@@ -60,49 +60,49 @@ export class BaseComponent {
   generateClasses() {
     return {
       // Base container styles
-      container: 'fs-relative fs-bg-slate-900 fs-rounded-xl fs-ring-1 fs-ring-slate-700',
+      container: 'relative bg-slate-900 rounded-xl ring-1 ring-slate-700',
       
       // Layout utilities
-      flex: 'fs-flex fs-items-center fs-justify-between',
-      grid: 'fs-grid fs-gap-3',
+      flex: 'flex items-center justify-between',
+      grid: 'grid gap-3',
       
       // Text hierarchy
       text: {
-        primary: 'fs-text-white fs-font-medium',
-        secondary: 'fs-text-slate-200',
-        tertiary: 'fs-text-slate-400',
-        small: 'fs-text-xs',
-        body: 'fs-text-sm'
+        primary: 'text-white font-medium',
+        secondary: 'text-slate-200',
+        tertiary: 'text-slate-400',
+        small: 'text-xs',
+        body: 'text-sm'
       },
       
       // Interactive elements
       button: {
-        primary: 'fs-bg-indigo-500 fs-py-1.5 fs-px-3 fs-text-white fs-rounded-md hover:fs-bg-indigo-600 fs-transition-colors',
-        secondary: 'fs-bg-slate-900 fs-text-slate-400 fs-rounded-md hover:fs-bg-indigo-500/15 hover:fs-text-indigo-500 fs-transition-colors',
-        danger: 'fs-bg-red-500/20 fs-text-red-400 fs-rounded-md hover:fs-bg-red-500/30 fs-transition-colors'
+        primary: 'bg-indigo-500 py-1.5 px-3 text-white rounded-md hover:bg-indigo-600 transition-colors',
+        secondary: 'bg-slate-900 text-slate-400 rounded-md hover:bg-indigo-500/15 hover:text-indigo-500 transition-colors',
+        danger: 'bg-red-500/20 text-red-400 rounded-md hover:bg-red-500/30 transition-colors'
       },
       
       // Status indicators
       status: {
-        success: 'fs-bg-green-500/15 fs-text-green-400',
-        warning: 'fs-bg-yellow-500/15 fs-text-yellow-400',
-        error: 'fs-bg-red-500/15 fs-text-red-400',
-        info: 'fs-bg-blue-500/15 fs-text-blue-400'
+        success: 'bg-green-500/15 text-green-400',
+        warning: 'bg-yellow-500/15 text-yellow-400',
+        error: 'bg-red-500/15 text-red-400',
+        info: 'bg-blue-500/15 text-blue-400'
       },
       
       // Common patterns
-      card: 'fs-bg-slate-800 fs-p-4 fs-rounded-lg fs-ring-1 fs-ring-slate-950',
-      badge: 'fs-px-2 fs-py-1 fs-rounded-full fs-text-xs fs-font-medium',
-      avatar: 'fs-rounded-full fs-ring-2 fs-ring-slate-700 fs-bg-slate-800',
+      card: 'bg-slate-800 p-4 rounded-lg ring-1 ring-slate-950',
+      badge: 'px-2 py-1 rounded-full text-xs font-medium',
+      avatar: 'rounded-full ring-2 ring-slate-700 bg-slate-800',
       
       // Responsive utilities
-      mobile: 'fs-block md:fs-hidden',
-      desktop: 'fs-hidden md:fs-block',
+      mobile: 'block md:hidden',
+      desktop: 'hidden md:block',
       
       // Animation classes
-      transition: 'fs-transition-all fs-duration-200 fs-ease-in-out',
-      fadeIn: 'fs-opacity-0 fs-animate-fade-in',
-      slideIn: 'fs-transform fs-translate-y-4 fs-animate-slide-in'
+      transition: 'transition-all duration-200 ease-in-out',
+      fadeIn: 'opacity-0 animate-fade-in',
+      slideIn: 'transform translate-y-4 animate-slide-in'
     };
   }
 
@@ -436,17 +436,17 @@ export class BaseComponent {
    */
   _createLoadingSpinner(size = 'md') {
     const sizeClasses = {
-      sm: 'fs-w-4 fs-h-4',
-      md: 'fs-w-6 fs-h-6',
-      lg: 'fs-w-8 fs-h-8'
+      sm: 'w-4 h-4',
+      md: 'w-6 h-6',
+      lg: 'w-8 h-8'
     };
     
     return `
-      <div class="fs-flex fs-items-center fs-justify-center fs-p-4">
-        <div class="${sizeClasses[size]} fs-animate-spin fs-text-indigo-500">
+      <div class="flex items-center justify-center p-4">
+        <div class="${sizeClasses[size]} animate-spin text-indigo-500">
           <svg fill="none" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="fs-opacity-25"></circle>
-            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" class="fs-opacity-75"></path>
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle>
+            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" class="opacity-75"></path>
           </svg>
         </div>
       </div>
@@ -460,12 +460,12 @@ export class BaseComponent {
     const message = typeof error === 'string' ? error : error?.message || 'An error occurred';
     
     return `
-      <div class="fs-p-4 fs-bg-red-500/10 fs-border fs-border-red-500/20 fs-rounded-lg">
-        <div class="${this.classes.text.body} fs-text-red-400">
+      <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+        <div class="${this.classes.text.body} text-red-400">
           ${message}
         </div>
         ${canRetry ? `
-          <button class="${this.classes.button.secondary} fs-mt-2" onclick="this.closest('[data-component]').__component.retry()">
+          <button class="${this.classes.button.secondary} mt-2" onclick="this.closest('[data-component]').__component.retry()">
             Try Again
           </button>
         ` : ''}
@@ -478,8 +478,8 @@ export class BaseComponent {
    */
   _createEmptyState(message = 'No items found', actionText = '', actionHandler = null) {
     return `
-      <div class="fs-flex fs-flex-col fs-items-center fs-justify-center fs-p-8">
-        <div class="${this.classes.text.tertiary} fs-mb-4">
+      <div class="flex flex-col items-center justify-center p-8">
+        <div class="${this.classes.text.tertiary} mb-4">
           ${message}
         </div>
         ${actionText && actionHandler ? `
@@ -496,11 +496,11 @@ export class BaseComponent {
    */
   _createBadge(text, variant = 'default') {
     const variantClasses = {
-      default: 'fs-bg-slate-500/15 fs-text-slate-400',
-      success: 'fs-bg-green-500/15 fs-text-green-400',
-      warning: 'fs-bg-yellow-500/15 fs-text-yellow-400',
-      error: 'fs-bg-red-500/15 fs-text-red-400',
-      info: 'fs-bg-blue-500/15 fs-text-blue-400'
+      default: 'bg-slate-500/15 text-slate-400',
+      success: 'bg-green-500/15 text-green-400',
+      warning: 'bg-yellow-500/15 text-yellow-400',
+      error: 'bg-red-500/15 text-red-400',
+      info: 'bg-blue-500/15 text-blue-400'
     };
     
     return `
@@ -515,9 +515,9 @@ export class BaseComponent {
    */
   _createAvatar(name, src = null, size = 'md') {
     const sizeClasses = {
-      sm: 'fs-w-6 fs-h-6 fs-text-xs',
-      md: 'fs-w-9 fs-h-9 fs-text-sm',
-      lg: 'fs-w-12 fs-h-12 fs-text-base'
+      sm: 'w-6 h-6 text-xs',
+      md: 'w-9 h-9 text-sm',
+      lg: 'w-12 h-12 text-base'
     };
     
     if (src) {
@@ -526,14 +526,14 @@ export class BaseComponent {
              src="${src}" 
              alt="${name}"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="${this.classes.avatar} ${sizeClasses[size]} fs-flex fs-items-center fs-justify-center fs-font-medium" style="display:none;">
+        <div class="${this.classes.avatar} ${sizeClasses[size]} flex items-center justify-center font-medium" style="display:none;">
           ${name.charAt(0).toUpperCase()}
         </div>
       `;
     }
     
     return `
-      <div class="${this.classes.avatar} ${sizeClasses[size]} fs-flex fs-items-center fs-justify-center fs-font-medium">
+      <div class="${this.classes.avatar} ${sizeClasses[size]} flex items-center justify-center font-medium">
         ${name.charAt(0).toUpperCase()}
       </div>
     `;
